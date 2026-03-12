@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-//1
+
 namespace lab1
 {
     public partial class MainWindow : Window
@@ -29,34 +29,26 @@ namespace lab1
 
             FigureCanvas.Children.Clear();
 
-            CircleCreator circleCreator;
-            SquareCreator squareCreator;
-            TriangleCreator triangleCreator;
+            IFigureFactory factory;
 
             switch (colorName)
             {
                 case "Blue":
-                    circleCreator = new BlueCircleCreator();
-                    squareCreator = new BlueSquareCreator();
-                    triangleCreator = new BlueTriangleCreator();
+                    factory = new BlueFactory();
                     break;
 
                 case "Green":
-                    circleCreator = new GreenCircleCreator();
-                    squareCreator = new GreenSquareCreator();
-                    triangleCreator = new GreenTriangleCreator();
+                    factory = new GreenFactory();
                     break;
 
                 default:
-                    circleCreator = new RedCircleCreator();
-                    squareCreator = new RedSquareCreator();
-                    triangleCreator = new RedTriangleCreator();
+                    factory = new RedFactory();
                     break;
             }
 
-            Shape circle = circleCreator.CreateFigure();
-            Shape square = squareCreator.CreateFigure();
-            Shape triangle = triangleCreator.CreateFigure();
+            Shape circle = factory.CreateCircle();
+            Shape square = factory.CreateSquare();
+            Shape triangle = factory.CreateTriangle();
 
             Canvas.SetLeft(circle, 70);
             Canvas.SetTop(circle, 100);
@@ -73,24 +65,16 @@ namespace lab1
         }
     }
 
-    public abstract class CircleCreator
+    public interface IFigureFactory
     {
-        public abstract Shape CreateFigure();
+        Shape CreateCircle();
+        Shape CreateSquare();
+        Shape CreateTriangle();
     }
 
-    public abstract class SquareCreator
+    public class RedFactory : IFigureFactory
     {
-        public abstract Shape CreateFigure();
-    }
-
-    public abstract class TriangleCreator
-    {
-        public abstract Shape CreateFigure();
-    }
-
-    public class RedCircleCreator : CircleCreator
-    {
-        public override Shape CreateFigure()
+        public Shape CreateCircle()
         {
             return new Ellipse
             {
@@ -101,41 +85,8 @@ namespace lab1
                 StrokeThickness = 2
             };
         }
-    }
 
-    public class BlueCircleCreator : CircleCreator
-    {
-        public override Shape CreateFigure()
-        {
-            return new Ellipse
-            {
-                Width = 120,
-                Height = 120,
-                Fill = Brushes.Blue,
-                Stroke = Brushes.Black,
-                StrokeThickness = 2
-            };
-        }
-    }
-
-    public class GreenCircleCreator : CircleCreator
-    {
-        public override Shape CreateFigure()
-        {
-            return new Ellipse
-            {
-                Width = 120,
-                Height = 120,
-                Fill = Brushes.Green,
-                Stroke = Brushes.Black,
-                StrokeThickness = 2
-            };
-        }
-    }
-
-    public class RedSquareCreator : SquareCreator
-    {
-        public override Shape CreateFigure()
+        public Shape CreateSquare()
         {
             return new Rectangle
             {
@@ -146,41 +97,8 @@ namespace lab1
                 StrokeThickness = 2
             };
         }
-    }
 
-    public class BlueSquareCreator : SquareCreator
-    {
-        public override Shape CreateFigure()
-        {
-            return new Rectangle
-            {
-                Width = 120,
-                Height = 120,
-                Fill = Brushes.Blue,
-                Stroke = Brushes.Black,
-                StrokeThickness = 2
-            };
-        }
-    }
-
-    public class GreenSquareCreator : SquareCreator
-    {
-        public override Shape CreateFigure()
-        {
-            return new Rectangle
-            {
-                Width = 120,
-                Height = 120,
-                Fill = Brushes.Green,
-                Stroke = Brushes.Black,
-                StrokeThickness = 2
-            };
-        }
-    }
-
-    public class RedTriangleCreator : TriangleCreator
-    {
-        public override Shape CreateFigure()
+        public Shape CreateTriangle()
         {
             return new Polygon
             {
@@ -197,9 +115,33 @@ namespace lab1
         }
     }
 
-    public class BlueTriangleCreator : TriangleCreator
+    public class BlueFactory : IFigureFactory
     {
-        public override Shape CreateFigure()
+        public Shape CreateCircle()
+        {
+            return new Ellipse
+            {
+                Width = 120,
+                Height = 120,
+                Fill = Brushes.Blue,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+        }
+
+        public Shape CreateSquare()
+        {
+            return new Rectangle
+            {
+                Width = 120,
+                Height = 120,
+                Fill = Brushes.Blue,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+        }
+
+        public Shape CreateTriangle()
         {
             return new Polygon
             {
@@ -216,9 +158,33 @@ namespace lab1
         }
     }
 
-    public class GreenTriangleCreator : TriangleCreator
+    public class GreenFactory : IFigureFactory
     {
-        public override Shape CreateFigure()
+        public Shape CreateCircle()
+        {
+            return new Ellipse
+            {
+                Width = 120,
+                Height = 120,
+                Fill = Brushes.Green,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+        }
+
+        public Shape CreateSquare()
+        {
+            return new Rectangle
+            {
+                Width = 120,
+                Height = 120,
+                Fill = Brushes.Green,
+                Stroke = Brushes.Black,
+                StrokeThickness = 2
+            };
+        }
+
+        public Shape CreateTriangle()
         {
             return new Polygon
             {
