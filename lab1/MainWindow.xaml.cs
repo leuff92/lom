@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-
+//1
 namespace lab1
 {
     public partial class MainWindow : Window
